@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: feedback-backend
+    runtime: python
+    buildCommand: "cd backend && pip install -r requirements.txt"
+    startCommand: "cd backend && gunicorn --bind 0.0.0.0:$PORT app:create_app()"
+    healthCheckPath: /
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_DEBUG
+        value: "False"
+
+databases:
+  - name: feedback-db
+    databaseName: feedback_db
+    user: feedback_user
