@@ -360,51 +360,9 @@ npm test
 docker-compose -f docker-compose.test.yml up --abort-on-container-exit
 ```
 
-## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
 
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
 
-### Development Guidelines
-
-- Follow PEP 8 for Python code
-- Use ESLint and Prettier for JavaScript
-- Write tests for new features
-- Update documentation for API changes
-- Ensure Docker builds pass
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🚀 What's Next?
-
-- [ ] Real-time notifications with WebSockets
-- [ ] Advanced analytics dashboard
-- [ ] Mobile app with React Native
-- [ ] Integration with Slack/Teams
-- [ ] AI-powered feedback suggestions
-- [ ] Multi-language support
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/apocalypse96/feedback-backend/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/apocalypse96/feedback-backend/discussions)
-- **Email**: support@feedbacksystem.com
-
-## 🙏 Acknowledgments
-
-- Built with ❤️ by the development team
-- Icons by [Heroicons](https://heroicons.com/)
-- Charts powered by [Recharts](https://recharts.org/)
-- Deployment guides inspired by [Docker best practices](https://docs.docker.com/develop/dev-best-practices/)
-
----
 
 **⭐ Star this repository if you found it helpful!**
 
