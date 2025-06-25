@@ -1,10 +1,18 @@
 [build]
-builder = "nixpacks"
+builder = "dockerfile"
 buildCommand = "pip install -r backend/requirements.txt"
 watchPatterns = ["backend/**"]
 
 [deploy]
 startCommand = "gunicorn --bind 0.0.0.0:$PORT --chdir backend app:create_app()"
 healthcheckPath = "/"
-healthcheckTimeout = 100
-restartPolicyType = "on_failure" 
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+
+[[deploy.environmentVariables]]
+name = "DATABASE_URL"
+value = "sqlite:///feedback.db"
+
+[[deploy.environmentVariables]]
+name = "FLASK_ENV"
+value = "production" 
