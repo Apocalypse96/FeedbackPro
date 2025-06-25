@@ -365,7 +365,7 @@ const CreateFeedback = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6 p-4 sm:p-6">
       {/* Progress Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -399,35 +399,33 @@ const CreateFeedback = () => {
         </div>
 
         {/* Progress Steps */}
-        <div className="px-6 py-4">
-          <nav aria-label="Progress">
-            <ol className="flex items-center">
+        <div className="px-4 sm:px-6 py-4 border-t border-gray-100">
+          <nav aria-label="Progress" className="max-w-4xl mx-auto">
+            <ol className="flex items-center justify-between overflow-x-auto pb-2">
               {steps.map((step, stepIdx) => (
                 <li
                   key={step.name}
-                  className={`${
-                    stepIdx !== steps.length - 1 ? "pr-8 sm:pr-20" : ""
-                  } relative`}
+                  className="relative flex-1 flex items-center justify-center min-w-0 px-2"
                 >
-                  <div className="flex items-center">
+                  <div className="flex flex-col items-center space-y-2 relative">
                     <button
                       onClick={() => setCurrentStep(step.id)}
-                      className={`relative flex h-8 w-8 items-center justify-center rounded-full border-2 transition-colors ${
+                      className={`relative flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300 transform hover:scale-105 z-10 ${
                         step.id < currentStep
-                          ? "bg-primary-600 border-primary-600 text-white"
+                          ? "bg-primary-600 border-primary-600 text-white shadow-glow"
                           : step.id === currentStep
-                          ? "border-primary-600 bg-white text-primary-600"
-                          : "border-gray-300 bg-white text-gray-500 hover:border-gray-400"
+                          ? "border-primary-600 bg-white text-primary-600 shadow-medium"
+                          : "border-gray-300 bg-white text-gray-500 hover:border-gray-400 hover:shadow-soft"
                       }`}
                     >
                       {step.id < currentStep ? (
-                        <CheckCircleSolid className="h-5 w-5" />
+                        <CheckCircleSolid className="h-6 w-6" />
                       ) : (
                         <step.icon className="h-5 w-5" />
                       )}
                     </button>
                     <span
-                      className={`ml-4 text-sm font-medium ${
+                      className={`text-xs sm:text-sm font-medium text-center whitespace-nowrap transition-colors duration-300 px-1 ${
                         step.id <= currentStep
                           ? "text-primary-600"
                           : "text-gray-500"
@@ -436,16 +434,44 @@ const CreateFeedback = () => {
                       {step.name}
                     </span>
                   </div>
+
+                  {/* Connector Line */}
                   {stepIdx !== steps.length - 1 && (
-                    <div
-                      className={`absolute top-4 left-4 -ml-px mt-0.5 h-0.5 w-8 sm:w-20 transition-colors ${
-                        step.id < currentStep ? "bg-primary-600" : "bg-gray-300"
-                      }`}
-                    />
+                    <div className="absolute top-5 left-1/2 w-full h-0.5 z-0 hidden sm:block">
+                      <div
+                        className={`h-full transition-all duration-500 ${
+                          step.id < currentStep
+                            ? "bg-gradient-to-r from-primary-600 to-primary-500"
+                            : "bg-gray-300"
+                        }`}
+                        style={{
+                          marginLeft: "2.5rem",
+                          width: "calc(100% - 5rem)",
+                        }}
+                      />
+                    </div>
                   )}
                 </li>
               ))}
             </ol>
+
+            {/* Mobile Progress Bar */}
+            <div className="mt-4 sm:hidden">
+              <div className="flex justify-between text-xs text-gray-500 mb-2">
+                <span>
+                  Step {currentStep} of {steps.length}
+                </span>
+                <span>
+                  {Math.round((currentStep / steps.length) * 100)}% Complete
+                </span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-primary-600 to-primary-500 rounded-full transition-all duration-500"
+                  style={{ width: `${(currentStep / steps.length) * 100}%` }}
+                />
+              </div>
+            </div>
           </nav>
         </div>
       </motion.div>
@@ -495,7 +521,7 @@ const CreateFeedback = () => {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.2 }}
-          className="bg-white rounded-lg shadow-sm p-6"
+          className="bg-white rounded-lg shadow-sm p-4 sm:p-6 overflow-hidden"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Step 1: Employee Selection */}
@@ -1003,7 +1029,7 @@ const CreateFeedback = () => {
             )}
 
             {/* Navigation Buttons */}
-            <div className="flex justify-between pt-6 border-t border-gray-200">
+            <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-200">
               <div>
                 {currentStep > 1 && (
                   <motion.button
@@ -1011,20 +1037,20 @@ const CreateFeedback = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handlePrevious}
-                    className="btn-secondary"
+                    className="btn-secondary w-full sm:w-auto"
                   >
                     ← Previous
                   </motion.button>
                 )}
               </div>
 
-              <div className="flex space-x-3">
+              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <motion.button
                   type="button"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate("/feedback")}
-                  className="btn-ghost"
+                  className="btn-ghost w-full sm:w-auto order-2 sm:order-1"
                   disabled={loading}
                 >
                   Cancel
@@ -1036,7 +1062,7 @@ const CreateFeedback = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleNext}
-                    className="btn-primary"
+                    className="btn-primary w-full sm:w-auto order-1 sm:order-2"
                   >
                     Next →
                   </motion.button>
@@ -1045,11 +1071,11 @@ const CreateFeedback = () => {
                     type="submit"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto order-1 sm:order-2"
                     disabled={loading || teamMembers.length === 0}
                   >
                     {loading ? (
-                      <span className="flex items-center">
+                      <span className="flex items-center justify-center">
                         <svg
                           className="animate-spin -ml-1 mr-3 h-4 w-4 text-white"
                           xmlns="http://www.w3.org/2000/svg"
@@ -1088,15 +1114,15 @@ const CreateFeedback = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="bg-gradient-to-r from-primary-50 to-purple-50 border border-primary-200 rounded-lg p-6"
+        className="bg-gradient-to-r from-primary-50 to-purple-50 border border-primary-200 rounded-lg p-4 sm:p-6"
       >
-        <div className="flex items-start">
-          <LightBulbIcon className="w-6 h-6 text-primary-600 mt-0.5 mr-3 flex-shrink-0" />
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-start">
+          <LightBulbIcon className="w-6 h-6 text-primary-600 mb-3 sm:mt-0.5 sm:mr-3 sm:mb-0 flex-shrink-0" />
+          <div className="flex-1">
             <h3 className="text-lg font-medium text-primary-900 mb-3">
               💡 Best Practices for Professional Feedback
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-primary-800">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm text-primary-800">
               <div className="space-y-2">
                 <div className="flex items-start">
                   <span className="w-2 h-2 bg-primary-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
