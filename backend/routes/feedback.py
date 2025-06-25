@@ -96,7 +96,17 @@ def create_feedback():
             return jsonify({'error': 'You can only give feedback to your team members'}), 403
         
         # Convert tags list to comma-separated string
-        tags_string = ','.join(tags) if tags else ''
+        # Handle both string tags and tag objects with 'name' property
+        if tags:
+            tag_names = []
+            for tag in tags:
+                if isinstance(tag, dict) and 'name' in tag:
+                    tag_names.append(tag['name'])
+                elif isinstance(tag, str):
+                    tag_names.append(tag)
+            tags_string = ','.join(tag_names)
+        else:
+            tags_string = ''
         
         feedback = Feedback(
             manager_id=current_user['id'],
@@ -167,7 +177,18 @@ def update_feedback(feedback_id):
                 return jsonify({'error': 'Sentiment must be positive, neutral, or negative'}), 400
             feedback.sentiment = data['sentiment']
         if 'tags' in data:
-            tags_string = ','.join(data['tags']) if data['tags'] else ''
+            # Handle both string tags and tag objects with 'name' property
+            tags = data['tags']
+            if tags:
+                tag_names = []
+                for tag in tags:
+                    if isinstance(tag, dict) and 'name' in tag:
+                        tag_names.append(tag['name'])
+                    elif isinstance(tag, str):
+                        tag_names.append(tag)
+                tags_string = ','.join(tag_names)
+            else:
+                tags_string = ''
             feedback.tags = tags_string
         
         db.session.commit()
